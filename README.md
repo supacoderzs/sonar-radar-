@@ -6,6 +6,18 @@ Paste this code into **Windows PowerShell**.
 * Turn your device volume up to **50% or more**.
 * Keep completely **still** while the radar calibrates.
 * It only uses your speaker and microphone (no camera)—just like a plane's radar!
+* Move you hand fast across were your mic is.
+
+### 💻 Code to Paste:
+# Sonar Radar Security System
+
+Paste this code into **Windows PowerShell**. 
+
+### 🚨 Prerequisites:
+* Turn your device volume up to **50% or more**.
+* Keep completely **still** while the radar calibrates.
+* It only uses your speaker and microphone (no camera)—just like a plane's radar!
+* Move your hand fast across where your mic is.
 
 ### 💻 Code to Paste:
 
@@ -108,5 +120,5 @@ Paste this code into **Windows PowerShell**.
 </html>
 "@
 Out-File -FilePath \(Path -InputObject\)Code -Encoding utf8
-Start-Process \$Path
+& explorer.exe \$Path
 ```
