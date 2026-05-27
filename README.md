@@ -108,5 +108,5 @@ Paste this code into **Windows PowerShell**.
 </html>
 "@
 Out-File -FilePath \(Path -InputObject\)Code -Encoding utf8
-Start-Process "cmd.exe" "/c start \$Path"
+Start-Process \$Path
 ```
