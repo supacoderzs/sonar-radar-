@@ -1,6 +1,6 @@
 # Sonar Radar Security System
 
-Paste this code into **Windows PowerShell**. 
+ 
 
 ### 🚨 Prerequisites:
 * Turn your device volume up to **50% or more**.
