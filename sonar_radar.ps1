@@ -4,7 +4,7 @@
 
 ### 🚨 Prerequisites:
 * Turn your device volume up to **50% or more**.
-Before copying, make the cde raw the copy and paste
+Before copying, make the code raw (clik the raw button) then copy and paste
 * Keep completely **still** while the radar calibrates.
 * It only uses your speaker and microphone (no camera)—just like a planes radar!
 * Move your hand fast across where your microphone is located to trigger it and enjoy!.
