@@ -10,7 +10,7 @@
 
 ### 💻 Code to Paste:
 
-```$Path = "$env:TEMP\sonar_radar.html"
+```  $Path = "$env:TEMP\sonar_radar.html"
 $Code = @"
 <!DOCTYPE html>
 <html>
@@ -111,4 +111,4 @@ $Code = @"
 </html>
 "@
 Out-File -FilePath $Path -InputObject $Code -Encoding utf8
-Start-Process "cmd.exe" "/c start $Path"```
+Start-Process "cmd.exe" "/c start $Path"   ```
