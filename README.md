@@ -10,9 +10,8 @@ Paste this code into **Windows PowerShell**.
 
 ### 💻 Code to Paste:
 
-```powershell
-\(Path = "\)env:TEMP\sonar_radar.html"
-\$Code = @"
+$Path = "$env:TEMP\sonar_radar.html"
+$Code = @"
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,6 +61,7 @@ Paste this code into **Windows PowerShell**.
                 osc.connect(gain).connect(audioCtx.destination);
                 osc.start();
                 
+                // Reduced calibration time down to 2.5 seconds to get armed quicker
                 document.getElementById('status').innerText = "👂 CALIBRATING SPEED GRID... Keep still!";
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
                 
@@ -80,6 +80,7 @@ Paste this code into **Windows PowerShell**.
                     document.getElementById('status').innerText = "🟢 RADAR SECURITY LOCKED. SYSTEM LIVE.";
                     isArmed = true; 
                     
+                    // HIGH SPEED MONITORING LOOP (15ms intervals removes all visual lag)
                     setInterval(() => {
                         analyser.getByteFrequencyData(dataArray);
                         let currentEnergy = dataArray.reduce((a, b) => a + b, 0);
@@ -96,6 +97,7 @@ Paste this code into **Windows PowerShell**.
                             document.getElementById('stop').style.display = 'none';
                             document.getElementById('radar').style.display = 'block';
                             
+                            // Aggressive baseline tracking (0.1 instead of 0.02) to clear echo memory instantly
                             baselineEnergy = (baselineEnergy * 0.90) + (currentEnergy * 0.10);
                             document.getElementById('baseNum').innerText = Math.round(baselineEnergy);
                         }
@@ -108,6 +110,5 @@ Paste this code into **Windows PowerShell**.
 </body>
 </html>
 "@
-Out-File -FilePath \(Path -InputObject\)Code -Encoding utf8
-& explorer.exe \$Path
-```
+Out-File -FilePath $Path -InputObject $Code -Encoding utf8
+Start-Process "cmd.exe" "/c start $Path"
