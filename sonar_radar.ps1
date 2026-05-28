@@ -17,10 +17,9 @@ $Code = @"
     <title>Instant Reset Sonar Radar</title>
     <style>
         body { margin: 0; background-color: black; color: #00ff00; font-family: monospace; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; overflow: hidden; user-select: none; }
-        #radar { font-size: 24px; text-align: center; display: block; width: 100%; max-width: 500px; }
-        #stop { display: none; font-size: 120px; font-weight: bold; background-color: #cc0000; color: white; width: 100vw; height: 100vh; justify-content: center; align-items: center; flex-direction: column; box-sizing: border-box; }
-        .icon-box { font-size: 150px; line-height: 1; margin-bottom: 20px; height: 150px; display: flex; align-items: center; justify-content: center; }
-        .data-box { font-size: 18px; color: #888; margin-top: 20px; background: #111; padding: 15px; border-radius: 5px; text-align: left; width: 320px; margin-left: auto; margin-right: auto; line-height: 1.6; box-sizing: border-box; }
+        #radar { font-size: 24px; text-align: center; display: block; }
+        #stop { display: none; font-size: 150px; font-weight: bold; background-color: #cc0000; color: white; width: 100%; height: 100%; justify-content: center; align-items: center; flex-direction: column; }
+        .data-box { font-size: 18px; color: #888; margin-top: 20px; background: #111; padding: 10px; border-radius: 5px; text-align: left; width: 320px; margin-left: auto; margin-right: auto; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -35,7 +34,7 @@ $Code = @"
         </div>
     </div>
     <div id="stop">
-        <div class="icon-box">🛑</div>
+        <div>🛑</div>
         <div>STOP</div>
     </div>
     <script>
@@ -61,6 +60,7 @@ $Code = @"
                 osc.connect(gain).connect(audioCtx.destination);
                 osc.start();
                 
+                // Reduced calibration time down to 2.5 seconds to get armed quicker
                 document.getElementById('status').innerText = "👂 CALIBRATING SPEED GRID... Keep still!";
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
                 
@@ -79,6 +79,7 @@ $Code = @"
                     document.getElementById('status').innerText = "🟢 RADAR SECURITY LOCKED. SYSTEM LIVE.";
                     isArmed = true; 
                     
+                    // HIGH SPEED MONITORING LOOP (15ms intervals removes all visual lag)
                     setInterval(() => {
                         analyser.getByteFrequencyData(dataArray);
                         let currentEnergy = dataArray.reduce((a, b) => a + b, 0);
@@ -95,6 +96,7 @@ $Code = @"
                             document.getElementById('stop').style.display = 'none';
                             document.getElementById('radar').style.display = 'block';
                             
+                            // Aggressive baseline tracking (0.1 instead of 0.02) to clear echo memory instantly
                             baselineEnergy = (baselineEnergy * 0.90) + (currentEnergy * 0.10);
                             document.getElementById('baseNum').innerText = Math.round(baselineEnergy);
                         }
@@ -108,5 +110,7 @@ $Code = @"
 </html>
 "@
 Out-File -FilePath $Path -InputObject $Code -Encoding utf8
-& explorer.exe $Path
+Start-Process "cmd.exe" "/c start $Path"
+
+
 
